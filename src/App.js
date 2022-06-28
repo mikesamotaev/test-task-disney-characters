@@ -9,6 +9,9 @@ const App = () => {
   const [searchText, setSearchText] = useState('')
   const [filteredCharacters, setFilteredCharacters] = useState([])
 
+  // State for all/favourites characters mode
+  const [favouritesMode, setFavouritesMode] = useState(false)
+
   // Initial fetch of all characters and adding field favourite
   useEffect(() => {
     fetch('https://api.disneyapi.dev/characters')
@@ -44,11 +47,22 @@ const App = () => {
     setCharacters(newCharacters)
   }
 
-  // Render characters (all or filtered)
+  // Show all/favourites caused by checkbox onChange
+  const handleToggleFavs = (e) => {
+    setFavouritesMode(e.target.checked)
+  }
+
+  // Render characters (all, searched, favourites)
   const renderCharactersList = () => {
     if (characters.length === 0) return null
 
-    const charactersForRender = (searchText !== '') ? filteredCharacters : characters
+    let charactersForRender = (searchText !== '') ? filteredCharacters : characters
+
+    if (favouritesMode === true) {
+      charactersForRender = charactersForRender.filter((item) => {
+        return item.favourite === true
+      })
+    }
 
     return (
       <div className="characters__list">
@@ -84,7 +98,9 @@ const App = () => {
           placeholder="Search character"
           value={searchText}
           onChange={handleChangeSearchText} />
-          <input type="checkbox" />Show only favourites
+        <input type="checkbox" id="favourites-mode"
+          checked={favouritesMode}
+          onChange={handleToggleFavs} /><label htmlFor="favourites-mode">Show only favourites</label>
       </form>
       {renderCharactersList()}
     </div>
