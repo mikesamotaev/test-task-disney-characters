@@ -36,6 +36,18 @@ code {
   font-weight: 300;
 }
 
+.characters__form {
+  margin-bottom: 3rem;
+
+  &-input {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid lightgrey;
+    border-radius: 1rem;
+    outline: none;
+  }
+}
+
 .characters__list {
   display: grid;
   grid-template-columns: 1fr;
