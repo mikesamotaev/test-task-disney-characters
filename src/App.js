@@ -13,12 +13,12 @@ const App = () => {
     if (characters.length === 0) return null
 
     return (
-      <div>
+      <div className="characters__list">
         {characters.map((item) => {
           return (
-            <div key={item._id}>
-              {item.imageUrl}
-              {item.name}
+            <div className="characters__item" key={item._id}>
+            <img className="characters__item-img" src={item.imageUrl} alt={item.name} />
+              <div className="characters__item-name">{item.name}</div>
             </div>
           )
         })}
@@ -27,8 +27,8 @@ const App = () => {
   }
 
   return (
-    <div className="app">
-      <h1>Disney API characters</h1> 
+    <div className="container">
+      <h1 className="characters__title">Disney API characters</h1> 
       {renderCharactersList()}
     </div>
   )
